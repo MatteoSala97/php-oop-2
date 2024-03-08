@@ -9,6 +9,50 @@ Immaginare quali sono le classi necessarie per creare uno shop online con le seg
 -->
 
 <?
+    class Product{
+        public $image;
+        public $title;
+        public $category;
+        public $type;
+        private $price; // set to private 
+
+        //constructor
+
+        public function __construct($_image, $_title, $_category, $_type, $_price){
+            $this->image = $_image;
+            $this->title = $_title;
+            $this->category = $_category;
+            $this->type = $_type;
+            $this->price = $_price;
+        }
+
+        //getter func for price
+
+        public function getPrice(){
+            return $this->price;
+        }
+
+        //setter func for price
+        public function setPrice($price){
+            $this->price = $price;
+        }
+        
+    }
+    
+    $firstProduct = new Product('./img/crocchette.jpg', 'Crocchette', 'per cani', 'Cibo', 15);
+    echo "Original Price: " . $firstProduct->getPrice() . "<br>";
+
+    $firstProduct->setPrice(20);
+
+    echo "Updated Price: " . $firstProduct->getPrice() . "<br>";
+
+    $secondProduct = new Product('./img/collar.webp', 'Collare', 'per gatti', 'Accessorio', 10);
+    $thirdProduct = new Product('./img/tennisball.jpeg', 'Pallina da tennis', 'per cani', 'Gioco', 5);
+
+    
+    echo $firstProduct->getPrice(); //15
+
+    var_dump($firstProduct, $secondProduct, $thirdProduct);
 
 ?>
 
@@ -46,7 +90,7 @@ Immaginare quali sono le classi necessarie per creare uno shop online con le seg
         <div class="container">
             <div class="row">
                 <div class="col-4">
-                    <div class="card">
+                    <div class="card mt-5">
                         <img class="card-img-top" src="./img/tennisball.jpeg" alt="Title"/>
                         <div class="card-body">
                             <h4 class="card-title">Title</h4>
