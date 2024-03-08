@@ -40,19 +40,19 @@ Immaginare quali sono le classi necessarie per creare uno shop online con le seg
     }
     
     $firstProduct = new Product('./img/crocchette.jpg', 'Crocchette', 'per cani', 'Cibo', 15);
-    echo "Original Price: " . $firstProduct->getPrice() . "<br>";
+    // echo "Original Price: " . $firstProduct->getPrice() . "<br>";
 
     $firstProduct->setPrice(20);
 
-    echo "Updated Price: " . $firstProduct->getPrice() . "<br>";
+    // echo "Updated Price: " . $firstProduct->getPrice() . "<br>";
 
     $secondProduct = new Product('./img/collar.webp', 'Collare', 'per gatti', 'Accessorio', 10);
     $thirdProduct = new Product('./img/tennisball.jpeg', 'Pallina da tennis', 'per cani', 'Gioco', 5);
 
     
-    echo $firstProduct->getPrice(); //15
+    // echo $firstProduct->getPrice(); //15
 
-    var_dump($firstProduct, $secondProduct, $thirdProduct);
+    // var_dump($firstProduct, $secondProduct, $thirdProduct);
 
 ?>
 
@@ -89,15 +89,19 @@ Immaginare quali sono le classi necessarie per creare uno shop online con le seg
 
         <div class="container">
             <div class="row">
+                <?php foreach([$firstProduct, $secondProduct, $thirdProduct] as $element): ?>
                 <div class="col-4">
                     <div class="card mt-5">
-                        <img class="card-img-top" src="./img/tennisball.jpeg" alt="Title"/>
+                        <img class="card-img-top" src="<?php echo $element->image; ?>" alt="<?php echo $element->title; ?>" style="height: 250px;"/>
                         <div class="card-body">
-                            <h4 class="card-title">Title</h4>
-                            <p class="card-text">Text</p>
+                            <h4 class="card-title"><?php echo $element->title; ?></h4>
+                            <p class="card-text">Categoria: <?php echo $element->category; ?></p>
+                            <p class="card-text">Tipo: <?php echo $element->type; ?></p>
+                            <p class="card-text">Prezzo: <?php echo $element->getPrice(); ?> €</p>
                         </div>
                     </div>
                 </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </main>
