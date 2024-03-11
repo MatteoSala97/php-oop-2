@@ -6,10 +6,17 @@ Immaginare quali sono le classi necessarie per creare uno shop online con le seg
 - I prodotti saranno oltre al cibo, anche giochi, cucce, etc.
  Stampiamo delle card contenenti i dettagli dei prodotti, come immagine, titolo, prezzo, icona della categoria ed il tipo di articolo che si sta visualizzando (prodotto, cibo, gioco, cuccia). 
 
+Oggi continuate a lavorare nella stessa repo di ieri aggiungendo almeno un trait ed un exception al vostro shop!
+nome repo di ieri: php-oop-2
+
 -->
 
 <?
     class Product{
+
+        use DescriptionTrait;
+        use DiscountTrait;
+
         public $image;
         public $title;
         public $category;
@@ -36,9 +43,19 @@ Immaginare quali sono le classi necessarie per creare uno shop online con le seg
         public function setPrice($price){
             $this->price = $price;
         }
+
+        // method to set category
+        public function setCategory($category) {
+            if ($category !== 'Cani' && $category !== 'Gatti') {
+                return false;
+            }
+            $this->category = $category;
+            return true;
+        }
         
+       
     }
-    
+
     $firstProduct = new Product('./img/crocchette.jpg', 'Crocchette', 'per cani', 'Cibo', 15);
     // echo "Original Price: " . $firstProduct->getPrice() . "<br>";
 
@@ -54,6 +71,41 @@ Immaginare quali sono le classi necessarie per creare uno shop online con le seg
 
     // var_dump($firstProduct, $secondProduct, $thirdProduct);
 
+
+        class InvalidCategoryException extends Exception {
+            public function errorMessage() {
+                return "Invalid category!";
+            }
+        }
+
+        //trait 1
+        trait DescriptionTrait{
+            public function getDescription(){
+                 return $this->title . ' - ' . $this->category . ' - ' . $this->type;
+            }
+        };
+
+        // trait 2
+        trait DiscountTrait {
+            public function applyDiscount($discountPercentage) {
+                $discountedPrice = $this->price * (1 - ($discountPercentage / 100));
+                return round($discountedPrice, 2);
+            }
+        }
+
+        //exception 1 
+
+        /*****************************************************************************************************************************************************************************************
+        SE SOSTITUISCO IL VALORE PESCI CON LE CATEGORIE CANI O GATTI LA FUNZIONE NON PRINTA L'ERRORE. SE METTO QUASIASI ALTRA COSA PRINTA L'ERRORE IN CIMA ALLA PAGINA 
+        ******************************************************************************************************************************************************************************************/
+
+        try {
+            if(!$firstProduct->setCategory('Pesci')){
+                echo '<div class="alert alert-danger" role="alert">Errore: Categoria non valida!</div>';
+            }
+        } catch (InvalidCategoryException $e) {
+            echo '<div class="alert alert-danger" role="alert"> Error: ' . $e->getMessage() . '</div>';
+        }
 ?>
 
 <!DOCTYPE html>
@@ -97,7 +149,10 @@ Immaginare quali sono le classi necessarie per creare uno shop online con le seg
                             <h4 class="card-title"><?php echo $element->title; ?></h4>
                             <p class="card-text">Categoria: <?php echo $element->category; ?></p>
                             <p class="card-text">Tipo: <?php echo $element->type; ?></p>
-                            <p class="card-text">Prezzo: <?php echo $element->getPrice(); ?> €</p>
+                            <p class="card-text">Prezzo originale: <?php echo $element->getPrice(); ?> €</p>
+
+                            <p class="card-text text-success">Descrizione: <?php echo $element->getDescription();?></p>
+                            <p class="card-text text-success">Prezzo dopo lo sconto applicato: <?php echo $element->applyDiscount(5);?> <p>
                         </div>
                     </div>
                 </div>
