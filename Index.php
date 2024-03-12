@@ -11,7 +11,7 @@ nome repo di ieri: php-oop-2
 
 -->
 
-<?
+<?php
     class Product{
 
         use DescriptionTrait;
@@ -55,6 +55,28 @@ nome repo di ieri: php-oop-2
         
        
     }
+
+    /*******************************************************
+                Post correzione 12/03
+    ********************************************************/
+
+    class Cuccia extends Product {
+        private $dimensions;
+    
+        public function __construct($_image, $_title, $_category, $_type, $_price, $_dimensions) {
+            parent::__construct($_image, $_title, $_category, $_type, $_price);
+            $this->dimensions = $_dimensions;
+        }
+    
+        public function getDimensions() {
+            return $this->dimensions;
+        }
+    }
+    // set new instance for class "cuccia"
+    $cuccia = new Cuccia('./img/cuccia.jpg', 'Cuccia per Cani', 'Cani', 'Cuccia', 50, '50x60x40 cm');
+
+
+
 
     $firstProduct = new Product('./img/crocchette.jpg', 'Crocchette', 'per cani', 'Cibo', 15);
     // echo "Original Price: " . $firstProduct->getPrice() . "<br>";
@@ -153,6 +175,7 @@ nome repo di ieri: php-oop-2
 
                             <p class="card-text text-success">Descrizione: <?php echo $element->getDescription();?></p>
                             <p class="card-text text-success">Prezzo dopo lo sconto applicato: <?php echo $element->applyDiscount(5);?> <p>
+                            <p class="card-text">Dimensioni: <?php echo $cuccia->getDimensions(); ?></p> 
                         </div>
                     </div>
                 </div>
